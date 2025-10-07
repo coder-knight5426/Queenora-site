@@ -13,6 +13,8 @@ export type WooProduct = {
   manage_stock?: boolean;
   stock_quantity?: number | null;
   attributes?: { id: number; name: string; options?: string[]; variation?: boolean }[];
+  average_rating?: string; // WooCommerce returns as string
+  rating_count?: number;
 };
 
 export type WooCategory = {
@@ -108,6 +110,34 @@ export async function fetchVariationsNoStore(productId: number): Promise<WooVari
   });
   if (!res.ok) throw new Error("Failed to fetch variations");
   return res.json();
+}
+
+// WordPress posts (blog)
+export type WPPost = {
+  id: number;
+  date: string;
+  slug: string;
+  title: { rendered: string };
+  excerpt: { rendered: string };
+  content: { rendered: string };
+  _embedded?: any;
+};
+
+export async function fetchPostsNoStore(): Promise<WPPost[]> {
+  const base = process.env.WP_URL;
+  if (!base) throw new Error("WP_URL is not configured");
+  const res = await fetch(`${base}/wp-json/wp/v2/posts?per_page=20&_embed`, { cache: "no-store" });
+  if (!res.ok) throw new Error("Failed to fetch posts");
+  return res.json();
+}
+
+export async function fetchPostBySlug(slug: string): Promise<WPPost | null> {
+  const base = process.env.WP_URL;
+  if (!base) throw new Error("WP_URL is not configured");
+  const res = await fetch(`${base}/wp-json/wp/v2/posts?slug=${encodeURIComponent(slug)}&_embed`, { cache: "no-store" });
+  if (!res.ok) throw new Error("Failed to fetch post by slug");
+  const arr: WPPost[] = await res.json();
+  return arr[0] || null;
 }
 
 

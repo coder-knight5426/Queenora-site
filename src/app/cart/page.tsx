@@ -6,7 +6,7 @@ import { useCart } from "../../components/CartProvider";
 export default function CartPage() {
   const { items, total, removeItem, updateQty } = useCart();
   return (
-    <main className="mx-auto max-w-7xl px-4 py-12">
+    <main className="mx-auto max-w-7xl bg-[#fff0f7] px-4 py-12">
       <h1 className="mb-4 text-2xl font-semibold">Your Cart</h1>
       {items.length === 0 ? (
         <p className="text-black/70">Your cart is empty.</p>

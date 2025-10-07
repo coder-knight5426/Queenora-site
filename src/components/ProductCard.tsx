@@ -24,21 +24,26 @@ type ProductCardProps = {
 
 export default function ProductCard({ product }: ProductCardProps) {
   const image = product.images && product.images.length > 0 ? product.images[0] : undefined;
-  const displayPrice = product.price ?? product.sale_price ?? product.regular_price ?? "";
+  const salePrice = product.sale_price && product.sale_price !== "0" ? product.sale_price : undefined;
+  const regularPrice = product.regular_price && product.regular_price !== "0" ? product.regular_price : undefined;
+  const displayPrice = product.price ?? salePrice ?? regularPrice ?? "";
+  const onSale = salePrice && regularPrice && parseFloat(salePrice) < parseFloat(regularPrice);
 
   return (
     <Link
       href={`/product/${product.slug}`}
-      className="group block overflow-hidden rounded-lg border border-black/10 bg-white hover:shadow-md transition-shadow"
-    
+      className="group block overflow-hidden rounded-2xl border border-black/10 bg-white hover:shadow-md transition-shadow"
     >
-      <div className="aspect-[4/3] w-full bg-black/5">
+      <div className="relative aspect-[4/3] w-full bg-white">
+        {onSale && (
+          <span className="absolute left-3 top-3 rounded-full bg-[#b3c24b] px-2 py-0.5 text-[10px] font-semibold text-black shadow">ON SALE</span>
+        )}
         {image ? (
           // Using img instead of next/image to avoid remotePatterns setup for now
           <img
             src={image.src}
             alt={image.alt || product.name}
-            className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+            className="h-full w-full object-contain p-6 transition-transform duration-300 group-hover:scale-105"
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center text-sm text-black/50">
@@ -46,11 +51,17 @@ export default function ProductCard({ product }: ProductCardProps) {
           </div>
         )}
       </div>
-      <div className="p-3">
+      <div className="px-4 pb-4">
         <h3 className="line-clamp-2 text-sm font-medium text-foreground">{product.name}</h3>
-        {displayPrice && (
-          <p className="mt-1 text-sm font-semibold tracking-wide">₹ {displayPrice}</p>
+        {onSale ? (
+          <div className="mt-1 flex items-baseline gap-2">
+            <span className="text-sm font-semibold">₹ {salePrice}</span>
+            <span className="text-xs text-black/50 line-through">₹ {regularPrice}</span>
+          </div>
+        ) : (
+          displayPrice && <p className="mt-1 text-sm font-semibold tracking-wide">₹ {displayPrice}</p>
         )}
+        <button className="mt-3 w-full rounded-full bg-[#b3c24b] px-4 py-2 text-xs font-semibold text-black hover:bg-[#a2b13f]">Shop Now</button>
       </div>
     </Link>
   );

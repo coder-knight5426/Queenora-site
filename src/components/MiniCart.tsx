@@ -13,7 +13,7 @@ export default function MiniCart() {
       />
       <aside
         className={
-          `absolute right-0 top-0 h-full w-full max-w-md transform bg-white shadow-xl transition-transform ` +
+          `absolute right-0 top-0 h-full w-full max-w-md transform bg-[#fff0f7] shadow-xl transition-transform ` +
           (open ? `translate-x-0` : `translate-x-full`)
         }
       >

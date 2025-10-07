@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
+  --background: #fff0f7; /* light pink as root */
   --foreground: #171717;
 }
 
@@ -52,6 +52,31 @@ body {
 .mask-fade-left {
   -webkit-mask-image: linear-gradient(to right, rgba(0,0,0,0) 0%, #000 18%, #000 100%);
           mask-image: linear-gradient(to right, rgba(0,0,0,0) 0%, #000 18%, #000 100%);
+}
+
+/* Glassmorphism helpers for mobile dropdown */
+.glass-card {
+  background: rgba(255, 240, 245, 0.92); /* stronger tint */
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 10px 40px rgba(31, 38, 135, 0.22);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+          backdrop-filter: blur(24px) saturate(180%);
+}
+
+.overlay-pink { background: rgba(255, 182, 193, 0.25); }
+
+@keyframes slowFadeUp {
+  0% { opacity: 0; transform: translateY(-10px) scale(0.98); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+.animate-slow-pop { animation: slowFadeUp 120ms ease-out both; }
+
+.glass-pill {
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+          backdrop-filter: blur(18px) saturate(160%);
+  box-shadow: 0 6px 22px rgba(31, 38, 135, 0.18);
 }
 .mask-fade-right {
   -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,0) 0%, #000 18%, #000 100%);

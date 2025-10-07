@@ -2,15 +2,32 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className="mt-12 bg-[#0f0f0f] text-[#cfcfcf]">
-      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-10 px-4 py-12 md:grid-cols-4">
+    <footer className="mt-2 bg-[#0f0f0f] text-[#cfcfcf]">
+      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-10 px-4 py-12 text-center md:grid-cols-4 md:text-left">
         <div>
           <h3 className="text-lg font-semibold text-white">Queenora</h3>
           <p className="mt-2 text-sm">© {new Date().getFullYear()} Queenora. All rights reserved.</p>
-          <div className="mt-4 flex gap-3 text-sm">
-            <a href="#" aria-label="Facebook" className="rounded p-1 hover:bg-white/10">Fb</a>
-            <a href="#" aria-label="Instagram" className="rounded p-1 hover:bg-white/10">Ig</a>
-            <a href="#" aria-label="X" className="rounded p-1 hover:bg-white/10">X</a>
+          <div className="mt-4 flex justify-center gap-3 md:justify-start">
+            <a
+              href="https://www.instagram.com/queenoraofficial/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+              className="rounded p-1 hover:bg-white/10"
+              title="Instagram"
+            >
+              <img src="/socialmediaIcon/instagram.png" alt="Instagram" className="h-6 w-6" />
+            </a>
+            <a
+              href="https://www.youtube.com/@queenora_official"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="YouTube"
+              className="rounded p-1 hover:bg-white/10"
+              title="YouTube"
+            >
+              <img src="/socialmediaIcon/youtube.png" alt="YouTube" className="h-6 w-6" />
+            </a>
           </div>
         </div>
         <div>
