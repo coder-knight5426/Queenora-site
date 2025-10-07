@@ -31,8 +31,7 @@ export const metadata = {
     default: "Queenora - Fine Jewelry",
     template: "%s | Queenora",
   },
-  description: "Discover handcrafted fine jewelry. Powered by WooCommerce.
-",
+  description: "Discover handcrafted fine jewelry. Powered by WooCommerce.",
   ...(safeMetadataBase ? { metadataBase: safeMetadataBase } : {}),
   openGraph: {
     title: "Queenora - Fine Jewelry",
