@@ -26,9 +26,9 @@ export default async function HomePage() {
             <h1 className="text-3xl font-semibold text-white" style={{ fontFamily: 'var(--font-display, serif)' }}>
               Breathtaking jewelry, just around the corner. 👑
             </h1>
-            <a href="/categories" className="rounded-full bg-white px-5 py-2 text-sm font-medium text-black shadow hover:bg-white/90">
+            <Link href="/categories" className="rounded-full bg-white px-5 py-2 text-sm font-medium text-black shadow hover:bg-white/90">
               Shop Now
-            </a>
+            </Link>
           </div>
         </div>
       </section>
