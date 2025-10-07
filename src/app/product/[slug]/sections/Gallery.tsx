@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import type { WooProduct } from "../../../../lib/woo";
 
 type Props = { images: NonNullable<WooProduct["images"]> };
@@ -27,12 +28,16 @@ export default function Gallery({ images }: Props) {
     <div>
       {/* Main image */}
       <div className="relative overflow-hidden rounded-lg border border-black/10 bg-white">
-        <img
-          src={safeImages[idx]?.src}
-          alt={safeImages[idx]?.alt || "Product image"}
-          className="h-full w-full cursor-zoom-in object-cover"
-          onClick={() => setOpen(true)}
-        />
+        {safeImages[idx]?.src && (
+          <Image
+            src={safeImages[idx]!.src}
+            alt={safeImages[idx]?.alt || "Product image"}
+            width={1024}
+            height={1024}
+            className="h-full w-full cursor-zoom-in object-cover"
+            onClick={() => setOpen(true)}
+          />
+        )}
         {safeImages.length > 1 && (
           <>
             <button
@@ -58,7 +63,7 @@ export default function Gallery({ images }: Props) {
         <div className="mt-3 grid grid-cols-5 gap-2">
           {safeImages.map((im, i) => (
             <button key={`${i}-${im.id ?? 'x'}-${im.src}`} onClick={() => setIdx(i)} className={`overflow-hidden rounded border ${i === idx ? 'border-black' : 'border-black/10'}`}>
-              <img src={im.src} alt={im.alt || "Thumb"} className="h-16 w-full object-cover" />
+              <Image src={im.src} alt={im.alt || "Thumb"} width={200} height={200} className="h-16 w-full object-cover" />
             </button>
           ))}
         </div>
@@ -68,7 +73,9 @@ export default function Gallery({ images }: Props) {
       {open && (
         <div className="fixed inset-0 z-[80] flex items-center justify-center bg-black/80 p-4" onClick={() => setOpen(false)}>
           <div className="relative max-h-[90vh] max-w-[90vw]" onClick={(e) => e.stopPropagation()}>
-            <img src={safeImages[idx]?.src} alt="Zoomed" className="max-h-[90vh] max-w-[90vw] object-contain" />
+            {safeImages[idx]?.src && (
+              <Image src={safeImages[idx]!.src} alt="Zoomed" width={1600} height={1600} className="h-auto w-auto max-h-[90vh] max-w-[90vw] object-contain" />
+            )}
             <button
               aria-label="Close"
               onClick={() => setOpen(false)}

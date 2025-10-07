@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 
 export type WooImage = {
   id: number;
@@ -39,10 +40,11 @@ export default function ProductCard({ product }: ProductCardProps) {
           <span className="absolute left-3 top-3 rounded-full bg-[#b3c24b] px-2 py-0.5 text-[10px] font-semibold text-black shadow">ON SALE</span>
         )}
         {image ? (
-          // Using img instead of next/image to avoid remotePatterns setup for now
-          <img
+          <Image
             src={image.src}
             alt={image.alt || product.name}
+            width={600}
+            height={450}
             className="h-full w-full object-contain p-6 transition-transform duration-300 group-hover:scale-105"
           />
         ) : (
