@@ -14,13 +14,26 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+// Build-safe metadataBase: tolerate values without protocol
+const rawSite = process.env.NEXT_PUBLIC_SITE_URL;
+let safeMetadataBase = undefined;
+if (rawSite) {
+  try {
+    const withProtocol = rawSite.startsWith("http://") || rawSite.startsWith("https://")
+      ? rawSite
+      : `https://${rawSite}`;
+    safeMetadataBase = new URL(withProtocol);
+  } catch {}
+}
+
 export const metadata = {
   title: {
     default: "Queenora - Fine Jewelry",
     template: "%s | Queenora",
   },
-  description: "Discover handcrafted fine jewelry. Powered by WooCommerce.",
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"),
+  description: "Discover handcrafted fine jewelry. Powered by WooCommerce.
+",
+  ...(safeMetadataBase ? { metadataBase: safeMetadataBase } : {}),
   openGraph: {
     title: "Queenora - Fine Jewelry",
     description: "Discover handcrafted fine jewelry.",
