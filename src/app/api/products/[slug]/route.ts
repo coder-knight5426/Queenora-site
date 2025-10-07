@@ -1,11 +1,11 @@
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 
 export async function GET(
-  _req: Request,
-  { params }: { params: { slug: string } }
+  _req: NextRequest,
+  context: { params: Promise<{ slug: string }> }
 ) {
   const base = process.env.WP_URL
-  const { slug } = params
+  const { slug } = await context.params
 
   if (!base) {
     return NextResponse.json({ error: 'WP_URL not configured' }, { status: 500 })

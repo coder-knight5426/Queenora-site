@@ -1,7 +1,7 @@
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 
-export async function GET(req: Request) {
-  const { searchParams } = new URL(req.url)
+export async function GET(req: NextRequest) {
+  const { searchParams } = req.nextUrl
   const search = searchParams.get('search')
   const category = searchParams.get('category')
   const perPage = searchParams.get('per_page')
