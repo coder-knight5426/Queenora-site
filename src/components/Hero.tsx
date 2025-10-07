@@ -3,7 +3,7 @@ export default function Hero() {
     <section className="mx-auto max-w-7xl px-4 py-8">
       <div className="grid grid-cols-1 items-stretch gap-6 md:grid-cols-[1.2fr_1fr_1fr_1fr]">
         <div className="flex h-auto flex-col justify-center rounded-xl border border-black/10 bg-white p-8 md:h-[520px]">
-          <h2 className="text-4xl font-semibold leading-tight text-[#2b211b]">It’s all About New Year</h2>
+          <h2 className="text-4xl font-semibold leading-tight text-[#2b211b]" style={{ fontFamily: 'var(--font-display, serif)' }}>It’s all About New Year</h2>
           <p className="mt-3 text-[15px] text-black/70">
             Discover your iconic style. Ethically sourced, consciously crafted.
           </p>

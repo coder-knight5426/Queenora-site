@@ -1,17 +1,21 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import AnnouncementBar from "../components/AnnouncementBar";
+import CartProvider from "../components/CartProvider";
+import MiniCart from "../components/MiniCart";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const interSans = Inter({
+  variable: "--font-sans-var",
   subsets: ["latin"],
+  display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const playfair = Playfair_Display({
+  variable: "--font-display-var",
   subsets: ["latin"],
+  display: "swap",
 });
 
 // Build-safe metadataBase: tolerate values without protocol
@@ -44,12 +48,17 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${interSans.variable} ${playfair.variable} antialiased min-h-screen flex flex-col`}
       >
-        <AnnouncementBar />
-        <Navbar />
-        {children}
-        <Footer />
+        <CartProvider>
+          <AnnouncementBar />
+          <Navbar />
+          <div className="flex-1">
+            {children}
+          </div>
+          <Footer />
+          <MiniCart />
+        </CartProvider>
       </body>
     </html>
   );

@@ -1,4 +1,5 @@
-import { fetchProductBySlug } from "../../../lib/woo";
+import { fetchProductBySlug, fetchVariationsNoStore, type WooVariation } from "../../../lib/woo";
+import AddToCart from "./sections/AddToCart";
 
 export const revalidate = 0;
 
@@ -18,6 +19,7 @@ export default async function ProductPage({ params }: PageProps) {
 
   const image = product.images && product.images.length > 0 ? product.images[0] : undefined;
   const price = product.price ?? product.sale_price ?? product.regular_price ?? "";
+  const variations: WooVariation[] = product.type === 'variable' ? await fetchVariationsNoStore(product.id) : [];
 
   return (
     <main className="mx-auto max-w-6xl px-4 py-8">
@@ -34,18 +36,14 @@ export default async function ProductPage({ params }: PageProps) {
         <div>
           <h1 className="text-2xl font-semibold tracking-tight">{product.name}</h1>
           {price && <p className="mt-2 text-xl font-bold">₹ {price}</p>}
+          <p className="mt-1 text-sm text-black/60">
+            {product.stock_status === 'instock' ? 'In stock' : product.stock_status === 'outofstock' ? 'Out of stock' : 'On backorder'}
+            {typeof product.stock_quantity === 'number' ? ` · ${product.stock_quantity} available` : ''}
+          </p>
           {product.short_description && (
             <div className="prose prose-sm mt-4 max-w-none" dangerouslySetInnerHTML={{ __html: product.short_description }} />
           )}
-          <form action="/api/checkout" method="POST" className="mt-6">
-            <input type="hidden" name="product_id" value={product.id} />
-            <button
-              type="submit"
-              className="rounded-md bg-black px-4 py-2 text-white hover:bg-black/90"
-            >
-              Buy Now
-            </button>
-          </form>
+          <AddToCart product={product} variations={variations} />
         </div>
       </div>
 

@@ -2,12 +2,17 @@ export type WooProduct = {
   id: number;
   name: string;
   slug: string;
+  type?: 'simple' | 'variable' | string;
   price?: string;
   regular_price?: string;
   sale_price?: string;
   images?: { id: number; src: string; alt?: string }[];
   description?: string;
   short_description?: string;
+  stock_status?: 'instock' | 'outofstock' | 'onbackorder';
+  manage_stock?: boolean;
+  stock_quantity?: number | null;
+  attributes?: { id: number; name: string; options?: string[]; variation?: boolean }[];
 };
 
 export type WooCategory = {
@@ -80,6 +85,28 @@ export async function searchProductsNoStore(query: string): Promise<WooProduct[]
     cache: "no-store",
   });
   if (!res.ok) throw new Error("Failed to search products");
+  return res.json();
+}
+
+export type WooVariation = {
+  id: number;
+  price?: string;
+  regular_price?: string;
+  sale_price?: string;
+  stock_status?: 'instock' | 'outofstock' | 'onbackorder';
+  stock_quantity?: number | null;
+  attributes: { name: string; option: string }[];
+  image?: { src: string };
+};
+
+export async function fetchVariationsNoStore(productId: number): Promise<WooVariation[]> {
+  const base = process.env.WP_URL;
+  if (!base) throw new Error("WP_URL is not configured");
+  const res = await fetch(`${base}/wp-json/wc/v3/products/${productId}/variations?per_page=100`, {
+    headers: { Authorization: getAuthHeader() },
+    cache: "no-store",
+  });
+  if (!res.ok) throw new Error("Failed to fetch variations");
   return res.json();
 }
 
