@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Footer() {
   return (
     <footer className="mt-12 border-t border-black/10">
@@ -5,9 +7,9 @@ export default function Footer() {
         <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
           <p>© {new Date().getFullYear()} Queenora. All rights reserved.</p>
           <nav className="flex gap-4">
-            <a href="/about" className="hover:text-black">About</a>
-            <a href="/blog" className="hover:text-black">Blog</a>
-            <a href="/categories" className="hover:text-black">Categories</a>
+            <Link href="/about" className="hover:text-black">About</Link>
+            <Link href="/blog" className="hover:text-black">Blog</Link>
+            <Link href="/categories" className="hover:text-black">Categories</Link>
           </nav>
         </div>
       </div>
